@@ -48,6 +48,8 @@ const onClickHandler = () => {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   gap: 50px;
   padding: 10px;
   justify-content: space-evenly;
@@ -173,76 +175,76 @@ function App() {
           autoClose={true}
           customStyles={CustomToastStyle}
         />
+        <MultiSelectDropdown options={options} onSelect={handleSelectMulti} />
+        <SingleSelectDropdown
+          searchable={true}
+          options={options}
+          onSelect={handleSelectSingle}
+        />
+        <SingleSelectDropdown
+          searchable={false}
+          options={options}
+          onSelect={handleSelectSingle}
+        />
+        <Modal
+          closed={closedDefault}
+          setClosed={setClosedDefault}
+          modalDetails={{
+            title: "Sample Modal",
+            actions: (
+              <>
+                <Button
+                  disabled={false}
+                  customStyles={buttonStyles}
+                  onClickHandler={onClickHandler}
+                >
+                  <i className="left">
+                    <img src={icon} alt="" />
+                  </i>
+                  Button CTA
+                  <i className="right">
+                    <img src={icon} alt="" />
+                  </i>
+                </Button>
+                <Button
+                  disabled={false}
+                  customStyles={buttonStyles}
+                  onClickHandler={onClickHandler}
+                >
+                  <i className="left">
+                    <img src={icon} alt="" />
+                  </i>
+                  Button CTA
+                  <i className="right">
+                    <img src={icon} alt="" />
+                  </i>
+                </Button>
+              </>
+            ),
+          }}
+        >
+          <p>This is a Modal Content</p>
+        </Modal>
+        <ConfirmationMessageModal
+          alertDetails={{
+            image: <img src={alertTriangle} alt="alert" />,
+            title: "Confirmation",
+            message: "Are you sure you want to proceed?",
+            onConfirm: () => {
+              console.log("confirmed");
+            },
+            onClose: () => console.log("Modal closed"),
+          }}
+          closed={closed}
+          setClosed={setClosed}
+        ></ConfirmationMessageModal>
+        <UserTag
+          name="Ali Rafea"
+          image="https://camo.githubusercontent.com/0a283fdc0ffde203438747f59bede51e5cfd88ba6805b6416822627e01e64ab7/68747470733a2f2f6a656e737365676572732e636f6d2f7374617469632f6d656469612f6167656e742e706e67"
+        />
+        <Tooltip text="This is a tooltip" />
+        <Loader />
       </Container>
-      <MultiSelectDropdown options={options} onSelect={handleSelectMulti} />
-      <SingleSelectDropdown
-        searchable={true}
-        options={options}
-        onSelect={handleSelectSingle}
-      />
-      <SingleSelectDropdown
-        searchable={false}
-        options={options}
-        onSelect={handleSelectSingle}
-      />
-      <Modal
-        closed={closedDefault}
-        setClosed={setClosedDefault}
-        modalDetails={{
-          title: "Sample Modal",
-          actions: (
-            <>
-              <Button
-                disabled={false}
-                customStyles={buttonStyles}
-                onClickHandler={onClickHandler}
-              >
-                <i className="left">
-                  <img src={icon} alt="" />
-                </i>
-                Button CTA
-                <i className="right">
-                  <img src={icon} alt="" />
-                </i>
-              </Button>
-              <Button
-                disabled={false}
-                customStyles={buttonStyles}
-                onClickHandler={onClickHandler}
-              >
-                <i className="left">
-                  <img src={icon} alt="" />
-                </i>
-                Button CTA
-                <i className="right">
-                  <img src={icon} alt="" />
-                </i>
-              </Button>
-            </>
-          ),
-        }}
-      >
-        <p>This is a Modal Content</p>
-      </Modal>
-      <ConfirmationMessageModal
-        alertDetails={{
-          image: <img src={alertTriangle} alt="alert" />,
-          title: "Confirmation",
-          message: "Are you sure you want to proceed?",
-          onConfirm: () => {
-            console.log("confirmed");
-          },
-          onClose: () => console.log("Modal closed"),
-        }}
-        closed={closed}
-        setClosed={setClosed}
-      ></ConfirmationMessageModal>
-      <UserTag
-        name="Ali Rafea"
-        image="https://camo.githubusercontent.com/0a283fdc0ffde203438747f59bede51e5cfd88ba6805b6416822627e01e64ab7/68747470733a2f2f6a656e737365676572732e636f6d2f7374617469632f6d656469612f6167656e742e706e67"
-      />
-      <Tooltip text="This is a tooltip" />
-      <Loader />
     </>
   );
 }

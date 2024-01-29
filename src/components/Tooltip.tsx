@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import styled from "styled-components";
-import helpCircle from "../assets/icons/help-circle.svg";
+import HelpCircle from "../assets/icons/help-circle";
 import helpCircleHovered from "../assets/icons/help-circle-hovered.svg";
 
 interface TooltipProps {
@@ -25,7 +25,6 @@ const TooltipIcon = styled.div`
   height: 100%;
   /* position: absolute; */
   /* right: 0; */
-  background: url(${helpCircle}) no-repeat center center;
   background-size: cover;
 
   &:hover {
@@ -112,7 +111,9 @@ const Tooltip: React.FC<TooltipProps> = ({ text }) => {
     <>
       <Container>
         <TooltipIconContainer ref={tooltipRef}>
-          <TooltipIcon />
+          <TooltipIcon>
+            <HelpCircle />
+          </TooltipIcon>
         </TooltipIconContainer>
         <TooltipContainer position={position} text={text}>
           <span>{text}</span>

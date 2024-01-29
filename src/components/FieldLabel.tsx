@@ -1,6 +1,6 @@
 import React from "react";
 import styled, { css, Interpolation } from "styled-components";
-import helpCircle from "../assets/icons/help-circle.svg";
+import HelpCircle from "../assets/icons/help-circle";
 import helpCircleHovered from "../assets/icons/help-circle-hovered.svg";
 
 interface FieldLabelProps {
@@ -30,17 +30,16 @@ const LabelContainer = styled.label<FieldLabelProps>`
     `}
 `;
 
-const TooltipIcon = styled.img`
+const TooltipIcon = styled.div`
   width: 16px;
   height: 16px;
   cursor: pointer;
-  content: url(${helpCircle});
+  fill: #98a2b3;
 
   &:hover {
-    content: url(${helpCircleHovered});
+    fill: #006694;
   }
 `;
-
 const TooltipContainer = styled.div<FieldLabelProps>`
   position: absolute;
   bottom: 130%;
@@ -89,7 +88,9 @@ const FieldLabel: React.FC<FieldLabelProps> = ({
     </LabelText>
     {tooltip && (
       <>
-        <TooltipIcon />
+        <TooltipIcon>
+          <HelpCircle />
+        </TooltipIcon>
         <TooltipContainer>
           <span>{tooltip}</span>
         </TooltipContainer>

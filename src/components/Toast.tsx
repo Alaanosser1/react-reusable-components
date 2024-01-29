@@ -1,6 +1,6 @@
 import React, { ReactNode, useState, useEffect } from "react";
 import styled, { Interpolation, css, keyframes } from "styled-components";
-import closeIcon from "../assets/icons/clear.svg";
+import closeIcon from "../assets/icons/close.svg";
 
 interface ToastProps {
   customStyles?: Interpolation<object>[];

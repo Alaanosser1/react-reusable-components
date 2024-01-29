@@ -24,6 +24,7 @@ const InputContainer = styled.div`
   align-items: center;
   border-radius: 4px;
   background: #fff;
+  width: 100%;
 
   .right-icon {
     left: auto;
