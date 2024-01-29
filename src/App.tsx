@@ -90,7 +90,7 @@ function App() {
           <i className="left">
             <img src={icon} alt="" />
           </i>
-          Button CTA
+          Open Alert
           <i className="right">
             <img src={icon} alt="" />
           </i>
@@ -103,7 +103,7 @@ function App() {
           <i className="left">
             <img src={icon} alt="" />
           </i>
-          Button CTA
+          Open Modal
           <i className="right">
             <img src={icon} alt="" />
           </i>
