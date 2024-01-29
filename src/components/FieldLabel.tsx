@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import styled, { css, Interpolation } from "styled-components";
 import HelpCircle from "../assets/icons/help-circle";
-import helpCircleHovered from "../assets/icons/help-circle-hovered.svg";
 
 interface FieldLabelProps {
   required?: boolean;
@@ -30,16 +29,12 @@ const LabelContainer = styled.label<FieldLabelProps>`
     `}
 `;
 
-const TooltipIcon = styled.div`
+const TooltipIcon = styled.div<{ setTooltipColor?: any }>`
   width: 16px;
   height: 16px;
   cursor: pointer;
-  fill: #98a2b3;
-
-  &:hover {
-    fill: #006694;
-  }
 `;
+
 const TooltipContainer = styled.div<FieldLabelProps>`
   position: absolute;
   bottom: 130%;
@@ -80,23 +75,29 @@ const FieldLabel: React.FC<FieldLabelProps> = ({
   required,
   tooltip,
   customStyles,
-}) => (
-  <LabelContainer customStyles={customStyles}>
-    <LabelText>
-      {children}
-      {required && <span>*</span>}
-    </LabelText>
-    {tooltip && (
-      <>
-        <TooltipIcon>
-          <HelpCircle />
-        </TooltipIcon>
-        <TooltipContainer>
-          <span>{tooltip}</span>
-        </TooltipContainer>
-      </>
-    )}
-  </LabelContainer>
-);
-
+}) => {
+  const [tooltipColor, setTooltipColor] = useState("#98a2b3");
+  console.log(tooltipColor);
+  return (
+    <LabelContainer customStyles={customStyles}>
+      <LabelText>
+        {children}
+        {required && <span>*</span>}
+      </LabelText>
+      {tooltip && (
+        <>
+          <TooltipIcon
+            onMouseEnter={() => setTooltipColor("#006694")}
+            onMouseLeave={() => setTooltipColor("#98a2b3")}
+          >
+            <HelpCircle fill={tooltipColor} />
+          </TooltipIcon>
+          <TooltipContainer>
+            <span>{tooltip}</span>
+          </TooltipContainer>
+        </>
+      )}
+    </LabelContainer>
+  );
+};
 export default FieldLabel;

@@ -53,7 +53,7 @@ const Container = styled.div`
   gap: 50px;
   padding: 10px;
   justify-content: space-evenly;
-  font-family: poppins;
+  font-family: poppins !important;
 `;
 
 const CustomToastStyle = css`
