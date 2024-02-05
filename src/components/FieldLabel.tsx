@@ -29,7 +29,7 @@ const LabelContainer = styled.label<FieldLabelProps>`
     `}
 `;
 
-const TooltipIcon = styled.div<{ setTooltipColor?: any }>`
+const TooltipIcon = styled.div`
   width: 16px;
   height: 16px;
   cursor: pointer;
@@ -77,7 +77,6 @@ const FieldLabel: React.FC<FieldLabelProps> = ({
   customStyles,
 }) => {
   const [tooltipColor, setTooltipColor] = useState("#98a2b3");
-  console.log(tooltipColor);
   return (
     <LabelContainer customStyles={customStyles}>
       <LabelText>

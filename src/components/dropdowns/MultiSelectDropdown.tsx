@@ -3,9 +3,10 @@ import styled, { css } from "styled-components";
 import downIcon from "../../assets/icons/down.svg";
 import searchIcon from "../../assets/icons/search.svg";
 import closeTag from "../../assets/icons/close-tag.svg";
+import useOutsideClick from "../../hooks/useOutsideClick";
 
 interface DropdownProps {
-  options: Array<string | number>;
+  options: Array<string>;
   disabled?: boolean;
   onSelect: (selectedOption: Array<string | number>) => void;
 }
@@ -151,25 +152,15 @@ const MultiSelectDropdown: React.FC<DropdownProps> = ({
   const [focusedIndex, setFocusedIndex] = useState<number>(-1); // Track focused index
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // Handle outside click to close dropdown
-  useEffect(() => {
-    const handleOutsideClick = (event: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
-        setIsOpen(false);
-        setSearchMode(false);
-      }
-    };
-    onSelect(selectedOptions);
+  // Callback function to handle outside click events
+  const handleOutsideClick = () => {
+    setIsOpen(false);
+    setSearchMode(false);
+    setSearchText("");
+  };
 
-    document.addEventListener("mousedown", handleOutsideClick);
-
-    return () => {
-      document.removeEventListener("mousedown", handleOutsideClick);
-    };
-  }, []);
+  // handle click outside
+  useOutsideClick(dropdownRef, handleOutsideClick);
 
   // Handle keyboard navigation
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {

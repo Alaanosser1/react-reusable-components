@@ -7,12 +7,14 @@ interface TextInputProps {
   leftIcon?: ReactNode;
   isLeftIconPresent?: boolean;
   rightIcon?: ReactNode;
+  type?: string;
   placeholder?: string;
+  name?: string;
+  ref?: string;
   error?: boolean;
   errorLabel?: string;
   value?: string | number;
-  setInputValue: React.Dispatch<React.SetStateAction<string>>;
-  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+  handleChange: React.Dispatch<React.SetStateAction<string>>;
   customStyles?: Interpolation<object>[];
   disabled?: boolean;
 }
@@ -93,39 +95,57 @@ const InputElement = styled.input<TextInputProps>`
 const TextInput: React.FC<TextInputProps> = ({
   leftIcon,
   rightIcon,
+  type,
   placeholder,
+  name,
+  ref,
   error,
   customStyles,
   errorLabel,
   value,
-  setInputValue,
+  handleChange,
   disabled,
 }) => {
   // Check if a left icon is present
   const isLeftIconPresent = React.isValidElement(leftIcon);
+
   // State to track if the input is focused
   const [isInputFocused, setIsInputFocused] = useState(false);
 
   // Handle input change
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
+    handleChange(e.target.value);
+  };
+
+  const handleInputFocus = () => {
+    setIsInputFocused(true);
+  };
+
+  const handleInputBlur = () => {
+    setIsInputFocused(false);
+  };
+
+  const handleClearInputValue = () => {
+    handleChange("");
   };
 
   return (
     <InputContainer>
       {leftIcon && <IconWrapper>{leftIcon}</IconWrapper>}
       <InputElement
-        type="text"
         placeholder={placeholder}
+        type={type}
+        name={name}
+        ref={ref}
         value={value}
         onChange={handleInputChange}
         customStyles={customStyles}
         error={error}
         errorLabel={errorLabel}
         isLeftIconPresent={isLeftIconPresent}
-        onFocus={() => setIsInputFocused(true)}
-        onBlur={() => setIsInputFocused(false)}
-        setInputValue={setInputValue}
+        onFocus={handleInputFocus}
+        onBlur={handleInputBlur}
+        handleChange={handleChange}
         disabled={disabled}
       />
       {value && (
@@ -133,7 +153,7 @@ const TextInput: React.FC<TextInputProps> = ({
           <ClearIcon
             src={clearIcon}
             alt="Clear"
-            onClick={() => setInputValue("")}
+            onClick={handleClearInputValue}
           />
         </IconWrapper>
       )}

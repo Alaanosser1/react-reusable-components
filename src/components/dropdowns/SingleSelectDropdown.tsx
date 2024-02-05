@@ -2,9 +2,10 @@ import React, { useState, useRef, useEffect } from "react";
 import styled, { css } from "styled-components";
 import downIcon from "../../assets/icons/down.svg";
 import searchIcon from "../../assets/icons/search.svg";
+import useOutsideClick from "../../hooks/useOutsideClick";
 
 interface DropdownProps {
-  options: Array<string | number>;
+  options: Array<string>;
   disabled?: boolean;
   searchable?: boolean;
   onSelect: (selectedOption: string | number | undefined) => void;
@@ -127,39 +128,31 @@ const SingleSelectDropdown: React.FC<DropdownProps> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState<string | number>();
-  const [dropDownOptions, setDropDownOptions] =
-    useState<Array<string | number>>(options);
   const [searchText, setSearchText] = useState("");
   const [searchMode, setSearchMode] = useState(false);
   const [focusedIndex, setFocusedIndex] = useState<number>(-1); // Track focused index
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // Handle outside click to close dropdown
   useEffect(() => {
-    const handleOutsideClick = (event: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
-        setIsOpen(false);
-        setSearchMode(false);
-      }
-    };
     onSelect(selectedOption);
-
-    document.addEventListener("mousedown", handleOutsideClick);
-
-    return () => {
-      document.removeEventListener("mousedown", handleOutsideClick);
-    };
   }, []);
+
+  // Callback function to handle outside click events
+  const handleOutsideClick = () => {
+    setIsOpen(false);
+    setSearchMode(false);
+    setSearchText("");
+  };
+
+  // handle click outside
+  useOutsideClick(dropdownRef, handleOutsideClick);
 
   // Handle keyboard navigation
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (event.key === "ArrowDown") {
       event.preventDefault();
       setFocusedIndex((prevIndex) =>
-        Math.min(prevIndex + 1, dropDownOptions.length - 1)
+        Math.min(prevIndex + 1, options.length - 1)
       );
     } else if (event.key === "ArrowUp") {
       event.preventDefault();
@@ -167,10 +160,9 @@ const SingleSelectDropdown: React.FC<DropdownProps> = ({
     } else if (event.key === "Enter") {
       event.preventDefault();
       if (focusedIndex !== -1) {
-        handleSelect(dropDownOptions[focusedIndex]);
+        handleSelect(options[focusedIndex]);
       }
     } else if (event.key === " ") {
-      event.preventDefault();
       setSearchText((prevSearchText) => prevSearchText + " ");
     }
   };
@@ -217,7 +209,7 @@ const SingleSelectDropdown: React.FC<DropdownProps> = ({
 
   // Filter options based on search text
   const filteredOptions = customSort(
-    dropDownOptions.filter((option) =>
+    options.filter((option) =>
       String(option).toLowerCase().includes(searchText.toLowerCase())
     )
   );

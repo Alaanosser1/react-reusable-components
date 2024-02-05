@@ -19,14 +19,13 @@ const StyledNormalButton = styled.button<ButtonProps>`
   border-radius: 8px;
   font-family: Regular;
   cursor: pointer;
+  gap: 8px;
 
   i.left {
     display: inherit;
-    margin-right: 8px;
   }
   i.right {
     display: inherit;
-    margin-left: 8px;
   }
 
   &:disabled {

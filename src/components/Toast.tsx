@@ -104,7 +104,7 @@ const ToastBody = styled.div`
 const Toast: React.FC<ToastProps> = ({
   customStyles,
   toastDetails,
-  duration = 5000,
+  duration,
   closeButton = true,
   autoClose = true,
 }) => {
@@ -116,7 +116,7 @@ const Toast: React.FC<ToastProps> = ({
     if (autoClose) {
       timeoutId = setTimeout(() => {
         setIsVisible(false);
-      }, duration);
+      }, duration || 5000);
     }
 
     return () => clearTimeout(timeoutId);

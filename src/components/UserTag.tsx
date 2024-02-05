@@ -6,19 +6,19 @@ interface UserTagProps {
 }
 
 const UserTagContainer = styled.div`
-  width: 95px;
+  min-width: 95px;
   height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
 `;
 
-const UserTagCircle = styled.div`
+const UserAvatar = styled.div`
   width: 30px;
   height: 30px;
   background-color: #60cf9b;
-  border: 1px solid #fff;
   border-radius: 100%;
+  border-inline-end: 1px solid #ffffff;
   font-family: Poppins;
   font-size: 14px;
   display: flex;
@@ -32,7 +32,8 @@ const UserTagCircle = styled.div`
 `;
 
 const UserTagName = styled.div`
-  width: 70px;
+  white-space: nowrap;
+  padding: 0px 8px;
   height: 20px;
   background-color: #60cf9b;
   margin-left: -5px;
@@ -44,22 +45,26 @@ const UserTagName = styled.div`
   justify-content: center;
 `;
 
-const getInitials = (name: string): string => {
-  const words = name.split(" ");
-  const initials = words
-    .slice(0, 2)
-    .map((word) => word.charAt(0))
-    .join("");
-  return initials.toUpperCase();
-};
-
 const UserTag: React.FC<UserTagProps> = ({ name, image }) => {
+  const getUserName = (fullName: string): string => {
+    return fullName.split(" ").slice(0, 2).join(" ");
+  };
+
+  const getInitials = (name: string): string => {
+    const username = getUserName(name);
+    const initials = username
+      .split(" ")
+      .map((word) => word.charAt(0))
+      .join("");
+    return initials.toUpperCase();
+  };
+
   return (
     <UserTagContainer>
-      <UserTagCircle>
+      <UserAvatar>
         {!image ? getInitials(name) : <img src={image} />}
-      </UserTagCircle>
-      <UserTagName>{name.split(" ").slice(0, 2).join(" ")}</UserTagName>
+      </UserAvatar>
+      <UserTagName>{getUserName(name)}</UserTagName>
     </UserTagContainer>
   );
 };

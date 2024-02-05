@@ -1,6 +1,7 @@
 import React, { ReactNode, CSSProperties, useState, useEffect } from "react";
 import styled, { Interpolation } from "styled-components";
 import CloseIcon from "../../assets/icons/Close";
+import useScrollLock from "../../hooks/useScrollLock";
 
 interface ModalDetails {
   title?: ReactNode;
@@ -118,14 +119,9 @@ const Modal: React.FC<ModalProps> = ({
   const [closeIconWidth, setCloseIconWidth] = useState("20");
   const [closeIconHeight, setCloseIconHeight] = useState("20");
 
-  useEffect(() => {
-    // Add event listener to handle scrolling when the modal is open
-    if (!closed) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
-    }
+  useScrollLock(!closed);
 
+  useEffect(() => {
     const handleResize = () => {
       // Update iconFill based on screen size
       setCloseIconFill(window.innerWidth >= 743 ? "#667085" : "#015C9A");
@@ -139,7 +135,7 @@ const Modal: React.FC<ModalProps> = ({
       document.body.style.overflow = "auto";
       window.removeEventListener("resize", handleResize);
     };
-  }, [closed]);
+  }, []);
 
   const handleOnClose = () => {
     setClosed(true);

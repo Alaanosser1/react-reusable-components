@@ -2,14 +2,15 @@ import React, { ReactNode, useEffect, useState } from "react";
 import styled, { Interpolation, css } from "styled-components";
 import CloseIcon from "../../assets/icons/Close";
 import Button from "../Buttons";
+import useScrollLock from "../../hooks/useScrollLock";
 
 // Define TypeScript interfaces
 interface AlertDetails {
   image?: ReactNode;
   title?: ReactNode;
-  message?: ReactNode;
-  onConfirm?: () => void;
-  onClose?: () => void;
+  message: ReactNode;
+  onConfirm: () => void;
+  onClose: () => void;
 }
 
 interface ConfirmationMessageModalProps {
@@ -153,19 +154,7 @@ const ConfirmationMessageModal: React.FC<ConfirmationMessageModalProps> = ({
   closed,
   setClosed,
 }) => {
-  useEffect(() => {
-    // Add event listener to handle scrolling when the modal is open
-    if (!closed) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
-    }
-
-    return () => {
-      // Remove event listener when the modal is closed
-      document.body.style.overflow = "auto";
-    };
-  }, [closed]);
+  useScrollLock(!closed);
 
   const handleOnClose = () => {
     setClosed(true);

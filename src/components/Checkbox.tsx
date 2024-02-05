@@ -3,7 +3,7 @@ import styled, { Interpolation, css } from "styled-components";
 
 interface CheckboxProps {
   onCheckedBackground: string;
-  onToggle?: (checked: string) => void;
+  onToggle: (checked: string) => void;
   disabled?: boolean;
   customStyles?: Interpolation<object>[];
 }
@@ -71,6 +71,7 @@ const Checkbox: React.FC<CheckboxProps> = ({
       onChange={handleToggleChange}
       disabled={disabled}
       customStyles={customStyles}
+      onToggle={onToggle}
     />
   );
 };

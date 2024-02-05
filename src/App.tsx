@@ -18,6 +18,10 @@ import Loader from "./components/Loader";
 import UserTag from "./components/UserTag";
 import Tooltip from "./components/Tooltip";
 import ConfirmationMessageModal from "./components/modals/ConfirmationMessageModal";
+import SideMenu from "./components/nav/SideMenu";
+import "./index.css";
+import Navbar from "./components/nav/Navbar";
+import Layout from "./components/nav/Layout";
 
 const buttonStyles = css`
   padding: 8px 14px;
@@ -47,11 +51,16 @@ const onClickHandler = () => {
 
 const Container = styled.div`
   display: flex;
+`;
+
+const ItemsContainer = styled.div`
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 100%;
   gap: 50px;
-  padding: 10px;
+  padding: 100px;
   justify-content: space-evenly;
   font-family: poppins !important;
 `;
@@ -81,80 +90,83 @@ function App() {
   };
   const [closed, setClosed] = useState(true);
   const [closedDefault, setClosedDefault] = useState(true);
+
   return (
     <>
       <Container>
-        <Button
-          disabled={false}
-          customStyles={buttonStyles}
-          onClickHandler={() => setClosed(false)}
-        >
-          <i className="left">
-            <img src={icon} alt="" />
+        <Layout />
+        <ItemsContainer>
+          <Button
+            disabled={false}
+            customStyles={buttonStyles}
+            onClickHandler={() => setClosed(false)}
+          >
+            <i className="left">
+              <img src={icon} alt="" />
+            </i>
+            Open Alert
+            <i className="right">
+              <img src={icon} alt="" />
+            </i>
+          </Button>
+          <Button
+            disabled={false}
+            customStyles={buttonStyles}
+            onClickHandler={() => setClosedDefault(false)}
+          >
+            <i className="left">
+              <img src={icon} alt="" />
+            </i>
+            Open Modal
+            <i className="right">
+              <img src={icon} alt="" />
+            </i>
+          </Button>
+          <Button disabled={true} customStyles={buttonStyles}>
+            Button CTA
+          </Button>
+          <FieldLabel
+            required
+            tooltip="This is a tooltip This is a tooltip This is a tooltip This is a tooltip This is a tooltip This is a tooltip This is a tooltip"
+          >
+            Field Label
+          </FieldLabel>
+          <TextInput
+            placeholder="placeholder"
+            value={inputValue1}
+            handleChange={setInputValue1}
+            rightIcon={<img src={search} />}
+            leftIcon={<img src={search} />}
+          />
+          <TextInput
+            placeholder="placeholder"
+            error={true}
+            value={inputValue}
+            handleChange={setInputValue}
+          ></TextInput>
+          <i>
+            <img src={search} alt="" />
           </i>
-          Open Alert
-          <i className="right">
-            <img src={icon} alt="" />
-          </i>
-        </Button>
-        <Button
-          disabled={false}
-          customStyles={buttonStyles}
-          onClickHandler={() => setClosedDefault(false)}
-        >
-          <i className="left">
-            <img src={icon} alt="" />
-          </i>
-          Open Modal
-          <i className="right">
-            <img src={icon} alt="" />
-          </i>
-        </Button>
-        <Button disabled={true} customStyles={buttonStyles}>
-          Button CTA
-        </Button>
-        <FieldLabel
-          required
-          tooltip="This is a tooltip This is a tooltip This is a tooltip This is a tooltip This is a tooltip This is a tooltip This is a tooltip"
-        >
-          Field Label
-        </FieldLabel>
-        <TextInput
-          placeholder="placeholder"
-          value={inputValue1}
-          setInputValue={setInputValue1}
-          rightIcon={<img src={search} />}
-          leftIcon={<img src={search} />}
-        />
-        <TextInput
-          placeholder="placeholder"
-          error={true}
-          value={inputValue}
-          setInputValue={setInputValue}
-        ></TextInput>
-        <i>
-          <img src={search} alt="" />
-        </i>
-        <TextInput
-          placeholder="placeholder"
-          disabled={true}
-          value={inputValue}
-          setInputValue={setInputValue}
-        />
-        <Checkbox
-          onToggle={() => {
-            console.log("object");
-          }}
-          onCheckedBackground={tableCheckBoxBg}
-          disabled={false}
-        />
-        <Toggle
-          onToggle={() => {
-            console.log("test");
-          }}
-          disabled={false}
-        />
-        {/* <Toast
+          <TextInput
+            placeholder="placeholder"
+            disabled={true}
+            value={inputValue}
+            handleChange={setInputValue}
+          />
+          <Checkbox
+            onToggle={() => {
+              console.log("object");
+            }}
+            onCheckedBackground={tableCheckBoxBg}
+            disabled={false}
+          />
+          <Toggle
+            onToggle={() => {
+              console.log("test");
+            }}
+            disabled={false}
+          />
+          {/* <Toast
           title="Success"
           content="Operation completed!"
           customStyles={CustomToastStyle}
@@ -164,86 +176,87 @@ function App() {
           </i>
         </Toast> */}
 
-        <Toast
-          toastDetails={{
-            title: "Toast Title",
-            content: "This is the toast content",
-            icon: <img src={infoCirlce} alt="" />,
-          }}
-          duration={5000}
-          closeButton={true}
-          autoClose={true}
-          customStyles={CustomToastStyle}
-        />
-        <MultiSelectDropdown options={options} onSelect={handleSelectMulti} />
-        <SingleSelectDropdown
-          searchable={true}
-          options={options}
-          onSelect={handleSelectSingle}
-        />
-        <SingleSelectDropdown
-          searchable={false}
-          options={options}
-          onSelect={handleSelectSingle}
-        />
-        <Modal
-          closed={closedDefault}
-          setClosed={setClosedDefault}
-          modalDetails={{
-            title: "Sample Modal",
-            actions: (
-              <>
-                <Button
-                  disabled={false}
-                  customStyles={buttonStyles}
-                  onClickHandler={onClickHandler}
-                >
-                  <i className="left">
-                    <img src={icon} alt="" />
-                  </i>
-                  Button CTA
-                  <i className="right">
-                    <img src={icon} alt="" />
-                  </i>
-                </Button>
-                <Button
-                  disabled={false}
-                  customStyles={buttonStyles}
-                  onClickHandler={onClickHandler}
-                >
-                  <i className="left">
-                    <img src={icon} alt="" />
-                  </i>
-                  Button CTA
-                  <i className="right">
-                    <img src={icon} alt="" />
-                  </i>
-                </Button>
-              </>
-            ),
-          }}
-        >
-          <p>This is a Modal Content</p>
-        </Modal>
-        <ConfirmationMessageModal
-          alertDetails={{
-            image: <img src={alertTriangle} alt="alert" />,
-            title: "Confirmation",
-            message: "Are you sure you want to proceed?",
-            onConfirm: () => {
-              console.log("confirmed");
-            },
-            onClose: () => console.log("Modal closed"),
-          }}
-          closed={closed}
-          setClosed={setClosed}
-        ></ConfirmationMessageModal>
-        <UserTag
-          name="Ali Rafea"
-          image="https://camo.githubusercontent.com/0a283fdc0ffde203438747f59bede51e5cfd88ba6805b6416822627e01e64ab7/68747470733a2f2f6a656e737365676572732e636f6d2f7374617469632f6d656469612f6167656e742e706e67"
-        />
-        <Tooltip text="This is a tooltip" />
-        <Loader />
+          <Toast
+            toastDetails={{
+              title: "Toast Title",
+              content: "This is the toast content",
+              icon: <img src={infoCirlce} alt="" />,
+            }}
+            duration={5000}
+            closeButton={true}
+            autoClose={true}
+            customStyles={CustomToastStyle}
+          />
+          <MultiSelectDropdown options={options} onSelect={handleSelectMulti} />
+          <SingleSelectDropdown
+            searchable={true}
+            options={options}
+            onSelect={handleSelectSingle}
+          />
+          <SingleSelectDropdown
+            searchable={false}
+            options={options}
+            onSelect={handleSelectSingle}
+          />
+          <Modal
+            closed={closedDefault}
+            setClosed={setClosedDefault}
+            modalDetails={{
+              title: "Sample Modal",
+              actions: (
+                <>
+                  <Button
+                    disabled={false}
+                    customStyles={buttonStyles}
+                    onClickHandler={onClickHandler}
+                  >
+                    <i className="left">
+                      <img src={icon} alt="" />
+                    </i>
+                    Button CTA
+                    <i className="right">
+                      <img src={icon} alt="" />
+                    </i>
+                  </Button>
+                  <Button
+                    disabled={false}
+                    customStyles={buttonStyles}
+                    onClickHandler={onClickHandler}
+                  >
+                    <i className="left">
+                      <img src={icon} alt="" />
+                    </i>
+                    Button CTA
+                    <i className="right">
+                      <img src={icon} alt="" />
+                    </i>
+                  </Button>
+                </>
+              ),
+            }}
+          >
+            <p>This is a Modal Content</p>
+          </Modal>
+          <ConfirmationMessageModal
+            alertDetails={{
+              image: <img src={alertTriangle} alt="alert" />,
+              title: "Confirmation",
+              message: "Are you sure you want to proceed?",
+              onConfirm: () => {
+                console.log("confirmed");
+              },
+              onClose: () => console.log("Modal closed"),
+            }}
+            closed={closed}
+            setClosed={setClosed}
+          ></ConfirmationMessageModal>
+          <UserTag
+            name="Karim Hesham"
+            image="https://camo.githubusercontent.com/0a283fdc0ffde203438747f59bede51e5cfd88ba6805b6416822627e01e64ab7/68747470733a2f2f6a656e737365676572732e636f6d2f7374617469632f6d656469612f6167656e742e706e67"
+          />
+          <Tooltip text="This is a tooltip" />
+          <Loader />
+        </ItemsContainer>
       </Container>
     </>
   );
