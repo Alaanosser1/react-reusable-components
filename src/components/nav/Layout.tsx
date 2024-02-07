@@ -16,8 +16,19 @@ const Layout = () => {
   return (
     <>
       <>
-        <Navbar setIsCollapsed={setIsCollapsed} isCollapsed={isCollapsed} />
-        <SideMenu isCollapsed={isCollapsed} />
+        <Navbar
+          user={{
+            name: "Abdelrahman Abdallah",
+          }}
+          setIsCollapsed={setIsCollapsed}
+          isCollapsed={isCollapsed}
+        />
+        <SideMenu
+          user={{
+            name: "Abdelrahman Abdallah",
+          }}
+          isCollapsed={isCollapsed}
+        />
       </>
     </>
   );

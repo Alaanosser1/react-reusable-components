@@ -3,6 +3,7 @@ import styled, { css } from "styled-components";
 import downIcon from "../../assets/icons/down.svg";
 import searchIcon from "../../assets/icons/search.svg";
 import useOutsideClick from "../../hooks/useOutsideClick";
+import handleKeyboardEvents from "./utils/keyboardEventsHandler"; // Import the function
 
 interface DropdownProps {
   options: Array<string>;
@@ -147,26 +148,6 @@ const SingleSelectDropdown: React.FC<DropdownProps> = ({
   // handle click outside
   useOutsideClick(dropdownRef, handleOutsideClick);
 
-  // Handle keyboard navigation
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    if (event.key === "ArrowDown") {
-      event.preventDefault();
-      setFocusedIndex((prevIndex) =>
-        Math.min(prevIndex + 1, options.length - 1)
-      );
-    } else if (event.key === "ArrowUp") {
-      event.preventDefault();
-      setFocusedIndex((prevIndex) => Math.max(prevIndex - 1, -1));
-    } else if (event.key === "Enter") {
-      event.preventDefault();
-      if (focusedIndex !== -1) {
-        handleSelect(options[focusedIndex]);
-      }
-    } else if (event.key === " ") {
-      setSearchText((prevSearchText) => prevSearchText + " ");
-    }
-  };
-
   // Handle selection of an option
   const handleSelect = (option: string | number) => {
     setSelectedOption(option);
@@ -214,11 +195,22 @@ const SingleSelectDropdown: React.FC<DropdownProps> = ({
     )
   );
 
+  const handleEvents = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    handleKeyboardEvents(
+      event,
+      focusedIndex,
+      setFocusedIndex,
+      options,
+      handleSelect,
+      setSearchText
+    );
+  };
+
   // Render the Dropdown component
   return (
     <DropdownContainer
       ref={dropdownRef}
-      onKeyDown={handleKeyDown}
+      onKeyDown={handleEvents}
       tabIndex={0}
       searchMode={searchMode}
     >
