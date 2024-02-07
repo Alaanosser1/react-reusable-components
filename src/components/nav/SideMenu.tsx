@@ -37,6 +37,7 @@ const SideMenuContainer = styled.div<{
       visibility: ${(props) => props.isCollapsed && "none"};
       opacity: ${(props) => props.isCollapsed && "0"};
       transition: 0.1s ease-in-out;
+      display: ${(props) => props.isCollapsed && "none"};
     }
 
     &:hover {
@@ -47,6 +48,7 @@ const SideMenuContainer = styled.div<{
       .text {
         visibility: visible;
         opacity: 1;
+        display: block;
       }
       svg {
         fill: #b0d0de;

@@ -96,6 +96,7 @@ function App() {
       <Container>
         <Layout />
         <ItemsContainer>
+          <Button>Normal</Button>
           <Button
             disabled={false}
             customStyles={buttonStyles}
